@@ -8,32 +8,44 @@ class InsertionSort {
             return list;
         }
 
-        let sorted = [list.shift()];
-
-        while (list.length > 0) {
-            let item = list.shift();
-            let found = false;
-
-            for (let i = 0; i < sorted.length; i++) {
-                if (sorted[i] >= item) {
-                    sorted = [...sorted.slice(0, i), item, ...sorted.slice(i, sorted.length)];
-                    found = true;
+        for (let j = 1; j < list.length; j++) {
+            let current = list[j];
+            let i = j - 1;
+            while (i >= 0) {
+                if (current >= list[i]) {
+                    list[i + 1] = current;
                     break;
                 }
-            }
-
-            if (!found) {
-                sorted.push(item);
+                list[i + 1] = list[i];
+                list[i] = current;
+                i--;
             }
         }
 
-        return sorted;
+        return list;
+    }
+
+    isSorted(array=[]) {
+        if (array.length <= 1) {
+            return true;
+        }
+
+        for (let i = 1; i < array.length; i++) {
+            if (array[i] < array[i - 1]) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     test() {
+        const array = new Array(40000).fill(undefined).map(item => Math.random() * 10000);
         console.time('sort');
-        console.log(this.sort([34, 54, 4, 6, 5, 656, 7, 2, 4, 4, 5, 8, 4, 55, 4, 6, 77, 0]));
+        let result = this.sort(array);
         console.timeEnd('sort');
+        let sorted = this.isSorted(result);
+        console.log('sorted:', sorted);
     }
 }
 

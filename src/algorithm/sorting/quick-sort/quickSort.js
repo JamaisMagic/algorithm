@@ -29,10 +29,27 @@ class QuickSort {
         return [...leftList, ...middleList, ...rightList];
     }
 
+    isSorted(array=[]) {
+        if (array.length <= 1) {
+            return true;
+        }
+
+        for (let i = 1; i < array.length; i++) {
+            if (array[i] < array[i - 1]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     test() {
+        const array = new Array(40000).fill(undefined).map(item => Math.random() * 10000);
         console.time('sort');
-        console.log(this.sort([1, 6, 8, 3, 232, 563, 2, 9, 4, 6, 4, 65, 2345]));
+        let result = this.sort(array);
         console.timeEnd('sort');
+        let sorted = this.isSorted(result);
+        console.log('sorted:', sorted);
     }
 }
 

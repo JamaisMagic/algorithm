@@ -11,21 +11,40 @@ class SelectionSort {
 
         let leftList = [list.shift()];
 
-        for (let i = 0; i < list.length; i++) {
-            if (list[i] < leftList[0]) {
-                [leftList[0], list[i]] = [list[i], leftList[0]];
+        while (list.length > 0) {
+            for (let i = 0; i < list.length; i++) {
+                if (list[i] < leftList[leftList.length - 1]) {
+                    [leftList[leftList.length - 1], list[i]] = [list[i], leftList[leftList.length - 1]];
+                }
+            }
+
+            leftList.push(list.shift());
+        }
+
+        return leftList;
+    }
+
+    isSorted(array=[]) {
+        if (array.length <= 1) {
+            return true;
+        }
+
+        for (let i = 1; i < array.length; i++) {
+            if (array[i] < array[i - 1]) {
+                return false;
             }
         }
 
-        let rightList = this.sort(list);
-
-        return [...leftList, ...rightList];
+        return true;
     }
 
     test() {
+        const array = new Array(40000).fill(undefined).map(item => Math.random() * 10000);
         console.time('sort');
-        console.log(this.sort([34, 6, 44, 5, 343, 6, 9, 6, 7, 7, 34, 454, 9]));
+        let result = this.sort(array);
         console.timeEnd('sort');
+        let sorted = this.isSorted(result);
+        console.log('sorted:', sorted);
     }
 }
 

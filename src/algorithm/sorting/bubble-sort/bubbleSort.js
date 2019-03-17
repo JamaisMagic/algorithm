@@ -19,10 +19,27 @@ class BubbleSort {
         return list;
     }
 
+    isSorted(array=[]) {
+        if (array.length <= 1) {
+            return true;
+        }
+
+        for (let i = 1; i < array.length; i++) {
+            if (array[i] < array[i - 1]) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
     test() {
+        const array = new Array(40000).fill(undefined).map(item => Math.random() * 10000);
         console.time('sort');
-        console.log(this.sort([1, 4, 2, 8, 9, 6, 7, 3, 54, 3, 534, 67, 5, 4, 76]));
+        let result = this.sort(array);
         console.timeEnd('sort');
+        let sorted = this.isSorted(result);
+        console.log('sorted:%s', sorted);
     }
 }
 

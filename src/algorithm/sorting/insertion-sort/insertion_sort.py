@@ -9,7 +9,7 @@ class InsertionSort:
         arr = original_list.copy()
 
         if len(arr) <= 1:
-            return arr
+            return arr    
 
         sorted = [arr.pop()]
 
